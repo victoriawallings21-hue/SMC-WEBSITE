@@ -1,18 +1,12 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
-const path = require("path");
 
 const app = express();
 
-// ✅ Middleware
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
-// ✅ Serve frontend FIRST
-app.use(express.static(path.join(__dirname, "public")));
-
-// 🔐 EMAIL CONFIG
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -21,7 +15,6 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-// 📩 API ROUTE
 app.post("/send-code", async (req, res) => {
     const { code } = req.body;
 
@@ -40,19 +33,10 @@ app.post("/send-code", async (req, res) => {
         res.json({ message: "Code sent successfully!" });
 
     } catch (err) {
-        console.log("🔥 EMAIL ERROR:", err);
-        res.status(500).json({ message: "Email failed to send" });
+        console.log(err);
+        res.status(500).json({ message: "Email failed" });
     }
 });
 
-// ✅ FIX: Add this route
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
-// 🌐 PORT
 const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log("Server running"));
