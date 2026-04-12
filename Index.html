@@ -2215,11 +2215,9 @@
             }
 
             try {
-                const res = await fetch("http://localhost:3000/send-code", {
+                const res = await fetch("https://your-render-app.onrender.com/send-code", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ code })
                 });
 
