@@ -10,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <style>
+        body {
+    padding-bottom: env(safe-area-inset-bottom);
+}
         * {
             margin: 0;
             padding: 0;
@@ -606,15 +609,17 @@
         }
 
         #dashboard {
-            display: none;
-            position: fixed;
-            inset: 0;
-            overflow-y: auto;
-            background: var(--dashboard-bg);
-            color: #111;
-            z-index: 5000;
-            padding-bottom: 110px;
-        }
+    display: none;
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+    background: var(--dashboard-bg);
+    color: #111;
+    z-index: 5000;
+
+    /* ✅ ADD THIS */
+    padding-bottom: calc(140px + env(safe-area-inset-bottom));
+}
 
         .dashboard-shell {
             padding-top: 1rem;
@@ -1224,22 +1229,28 @@
         }
 
         .bottom-nav {
-            position: fixed;
-            left: 50%;
-            bottom: 18px;
-            transform: translateX(-50%);
-            width: min(94vw, 420px);
-            display: flex;
-            justify-content: space-around;
-            gap: .7rem;
-            padding: .7rem;
-            border-radius: 24px;
-            background: rgba(255, 255, 255, .9);
-            border: 1px solid rgba(17, 17, 17, .06);
-            box-shadow: 0 18px 44px rgba(14, 28, 22, .14);
-            backdrop-filter: blur(18px);
-            z-index: 20;
-        }
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* ❌ REMOVE this */
+    /* bottom: 18px; */
+
+    /* ✅ ADD THIS */
+    bottom: calc(10px + env(safe-area-inset-bottom));
+
+    width: min(94vw, 420px);
+    display: flex;
+    justify-content: space-around;
+    gap: .7rem;
+    padding: .7rem;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, .9);
+    border: 1px solid rgba(17, 17, 17, .06);
+    box-shadow: 0 18px 44px rgba(14, 28, 22, .14);
+    backdrop-filter: blur(18px);
+    z-index: 20;
+}
 
         .nav-item {
             flex: 1;
