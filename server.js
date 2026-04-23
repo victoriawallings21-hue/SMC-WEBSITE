@@ -79,11 +79,11 @@ app.post("/submit-application", async (req, res) => {
         return res.status(400).json({ message: "Please complete all fields." });
     }
 
-    if (!/^\d{11}$/.test(testNumber11) || !/^\d{10}$/.test(testNumber10)) {
-        return res.status(400).json({
-            message: "Invalid test numbers."
-        });
-    }
+    if (!/^\d+$/.test(testNumber11) || !/^\d+$/.test(testNumber10)) {
+    return res.status(400).json({
+        message: "Invalid test numbers. Only digits are allowed."
+    });
+}
 
     const imageAttachment = parseImageAttachment(photoName, photoData);
 
